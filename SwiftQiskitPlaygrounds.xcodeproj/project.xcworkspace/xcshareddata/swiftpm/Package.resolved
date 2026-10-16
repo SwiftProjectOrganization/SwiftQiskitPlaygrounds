@@ -1,0 +1,15 @@
+{
+  "originHash" : "5c839181f4003a7ae4e5f727bcf200f73b260392071564c6ad144802dae3b7b4",
+  "pins" : [
+    {
+      "identity" : "swiftqiskit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/SwiftProjectOrganization/SwiftQiskit.git",
+      "state" : {
+        "revision" : "d68068e0a2cd4ff73ca2b28e6be8c972c3df8de3",
+        "version" : "0.7.2"
+      }
+    }
+  ],
+  "version" : 3
+}
