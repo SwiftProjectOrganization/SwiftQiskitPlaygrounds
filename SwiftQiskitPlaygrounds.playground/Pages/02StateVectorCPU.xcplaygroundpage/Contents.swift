@@ -6,18 +6,18 @@
  gate U to qubit t is to build `I ⊗ … ⊗ U ⊗ … ⊗ I` (a 2ⁿ × 2ⁿ matrix) and multiply: O(4ⁿ)
  memory and time per gate. 20 qubits would need a 16 TB matrix.
 
- But U only ever mixes amplitudes whose indices differ in bit t alone. The state splits into
- 2ⁿ⁻¹ independent **pairs** `(i0, i1)` with `i1 = i0 | (1 << t)`, and each pair gets one tiny
+ But U only ever mixes amplitudes whose indices differ in one bit b alone. The state splits into
+ 2ⁿ⁻¹ independent **pairs** `(i0, i1)` with `i1 = i0 | (1 << b)`, and each pair gets one tiny
  2×2 matrix–vector product. That is O(2ⁿ) time and O(1) extra memory — the same answer as the
  big matrix, minus every multiplication by zero.
 
  Controlled gates fall out for free: only update pairs whose index has every control bit set
  to 1. CNOT is controlled-X, CZ is controlled-Z, Toffoli is X with two controls.
 
- **Bit order.** This page uses Qiskit's convention — qubit 0 is the *least*-significant bit
- (`|q2 q1 q0⟩ ↔ index q2·4 + q1·2 + q0`). SwiftQiskit's Core puts qubit 0 in the
- *most*-significant bit. §4 shows the mapping between the two, and §5 uses it to check this
- code against `QuantumCircuit.run()`.
+ **Bit order.** This page uses SwiftQiskit Core's convention — qubit 0 is the *most*-significant
+ bit (`|q0 q1 q2⟩ ↔ index q0·4 + q1·2 + q2`), so qubit `q` of an n-qubit register lives at bit
+ position `b = n-1-q`. (Qiskit numbers the other way, with qubit 0 as the least-significant
+ bit.) §5 checks this code against `QuantumCircuit.run()` gate for gate.
 
  Playground code is slow (instrumented), so this page sticks to small registers and checks
  correctness only — no timings.
@@ -87,13 +87,13 @@ struct StateVectorCPU {
     /// all being |1⟩.
     mutating func apply(_ gate: Gate1, to target: Int, controls: [Int] = []) {
         let controlMask = mask(for: controls, target: target)
-        let step = 1 << target          // distance between partners i0 and i1
+        let step = 1 << bit(of: target)  // distance between partners i0 and i1
         let dim = amplitudes.count
 
-        // Indices come in blocks of 2·step: the first half of each block has bit t = 0
-        // (that's i0), the second half has bit t = 1.
-        //   t = 0: blocks [0,1] [2,3] …        pairs (0,1) (2,3) …
-        //   t = 2: blocks [0…7] [8…15] …       pairs (0,4) (1,5) (2,6) (3,7) …
+        // Indices come in blocks of 2·step: the first half of each block has bit b = 0
+        // (that's i0), the second half has bit b = 1.
+        //   b = 0: blocks [0,1] [2,3] …        pairs (0,1) (2,3) …
+        //   b = 2: blocks [0…7] [8…15] …       pairs (0,4) (1,5) (2,6) (3,7) …
         amplitudes.withUnsafeMutableBufferPointer { psi in
             var block = 0
             while block < dim {
@@ -116,12 +116,13 @@ struct StateVectorCPU {
     /// Same result as `apply`, split across CPU cores.
     ///
     /// Number the 2ⁿ⁻¹ pairs p = 0, 1, 2, … and compute i0 directly by inserting a 0 bit at
-    /// position t into p:  i0 = (high bits of p shifted up one) | (low t bits of p).
-    /// e.g. t = 1, p = 0b101 → high = 0b10, low = 0b1 → i0 = 0b1001.
+    /// bit position b into p:  i0 = (high bits of p shifted up one) | (low b bits of p).
+    /// e.g. b = 1, p = 0b101 → high = 0b10, low = 0b1 → i0 = 0b1001.
     /// Every pair is independent, so any chunk of p values can run on any core, lock-free.
     mutating func applyParallel(_ gate: Gate1, to target: Int, controls: [Int] = []) {
         let controlMask = mask(for: controls, target: target)
-        let step = 1 << target
+        let b = bit(of: target)
+        let step = 1 << b
         let lowMask = step - 1
         let pairCount = amplitudes.count / 2
         let chunks = min(pairCount, ProcessInfo.processInfo.activeProcessorCount * 4)
@@ -136,7 +137,7 @@ struct StateVectorCPU {
                 let end = min(start + chunkSize, pairCount)
                 guard start < end else { return }
                 for p in start..<end {
-                    let i0 = ((p >> target) << (target + 1)) | (p & lowMask)
+                    let i0 = ((p >> b) << (b + 1)) | (p & lowMask)
                     if i0 & controlMask != controlMask { continue }
                     let i1 = i0 | step
                     let a0 = psi[i0], a1 = psi[i1]
@@ -158,12 +159,18 @@ struct StateVectorCPU {
         amplitudes.map { $0.magnitudeSquared }
     }
 
+    /// Bit position of `qubit` in an amplitude index. Core's qubit 0 is the most-significant
+    /// bit, so qubit q sits at bit n-1-q.
+    private func bit(of qubit: Int) -> Int {
+        qubitCount - 1 - qubit
+    }
+
     private func mask(for controls: [Int], target: Int) -> Int {
         precondition((0..<qubitCount).contains(target), "target out of range")
         var m = 0
         for c in controls {
             precondition((0..<qubitCount).contains(c) && c != target, "bad control \(c)")
-            m |= 1 << c
+            m |= 1 << bit(of: c)
         }
         return m
     }
@@ -183,7 +190,8 @@ print(bell.probabilities)
 // §3 — The pairs a gate touches (n = 3)
 // ------------------------------------------------------------
 // Two ways to enumerate them: block/offset loops (serial `apply`) and bit insertion
-// (`applyParallel`). They must list the same pairs.
+// (`applyParallel`). They must list the same pairs. Here `t` is a bit position (for n = 3,
+// bit 2 is qubit 0, bit 1 is qubit 1, bit 0 is qubit 2).
 
 for t in 0..<3 {
     let step = 1 << t
@@ -204,37 +212,25 @@ for t in 0..<3 {
 // t = 2: [[0, 4], [1, 5], [2, 6], [3, 7]]  same pairs: true
 
 // ------------------------------------------------------------
-// §4 — Bit-order gotcha: this page is LSB, Core is MSB
+// §4 — Bit order: same convention as Core
 // ------------------------------------------------------------
+// Qubit 0 is the most-significant bit, so H on qubit 0 of 3 qubits mixes indices 0 and 4.
 
-func bitReversed(_ i: Int, bits: Int) -> Int {
-    var r = 0
-    for b in 0..<bits where (i >> b) & 1 == 1 { r |= 1 << (bits - 1 - b) }
-    return r
-}
+var cpu3 = StateVectorCPU(qubits: 3)
+cpu3.apply(.h, to: 0)
+print(cpu3.probabilities)
+// [0.5, 0, 0, 0, 0.5, 0, 0, 0] (up to rounding)
 
-var lsb = StateVectorCPU(qubits: 3)
-lsb.apply(.h, to: 0)
-print(lsb.probabilities)
-// [0.5, 0.5, 0, 0, 0, 0, 0, 0] (up to rounding) — qubit 0 is the lowest bit: indices 0 and 1
-
-let msbCircuit = QuantumCircuit(qubits: 3)
-msbCircuit.h(0)
-print(msbCircuit.run().probabilities)
-// [0.5, 0, 0, 0, 0.5, 0, 0, 0] (up to rounding) — Core: qubit 0 is the highest bit: indices 0 and 4
-
-// Same gate on the same qubit label lands on bit-reversed indices:
-print((0..<8).map { bitReversed($0, bits: 3) })
-// [0, 4, 2, 6, 1, 5, 3, 7]
-// Equivalently, relabel the qubits (Core's qubit q is this page's qubit n-1-q) and the
-// indices line up one-to-one — which is what §5 does.
+let coreCircuit3 = QuantumCircuit(qubits: 3)
+coreCircuit3.h(0)
+print(coreCircuit3.run().probabilities)
+// Same output. (Qiskit's qubit 0 = LSB would give indices 0 and 1 instead.)
 
 // ------------------------------------------------------------
 // §5 — Cross-check against Core's run()
 // ------------------------------------------------------------
-// The same 5-qubit circuit on both. Qubit q here is qubit n-1-q in Core, which makes the
-// amplitude at index i identical in both (no bit reversal needed). It includes a Toffoli
-// (two controls) and a CZ (controlled-Z).
+// The same 5-qubit circuit on both, with identical qubit labels, so the amplitude at index i
+// agrees directly. It includes a Toffoli (two controls) and a CZ (controlled-Z).
 
 //let n = 5
 //var cpu = StateVectorCPU(qubits: n)
@@ -242,18 +238,18 @@ print((0..<8).map { bitReversed($0, bits: 3) })
 //
 //for q in 0..<n {
 //    cpu.apply(.h, to: q)
-//    core.h(n - 1 - q)
+//    core.h(q)
 //}
-//cpu.apply(.t, to: 1);          core.t(n - 1 - 1)
-//cpu.apply(.s, to: 3);          core.s(n - 1 - 3)
-//cpu.apply(.y, to: 0);          core.y(n - 1 - 0)
-//cpu.apply(.rz(0.7), to: 2);    core.rz(0.7, n - 1 - 2)
-//cpu.apply(.ry(1.3), to: 4);    core.ry(1.3, n - 1 - 4)
-//cpu.cnot(control: 0, target: 3); core.cx(n - 1 - 0, n - 1 - 3)
-//cpu.apply(.x, to: 4, controls: [1, 2]);  core.ccx(n - 1 - 1, n - 1 - 2, n - 1 - 4)   // Toffoli
-//cpu.apply(.z, to: 2, controls: [4]);     core.cz(n - 1 - 4, n - 1 - 2)               // CZ
-//cpu.apply(.ry(-0.4), to: 1);   core.ry(-0.4, n - 1 - 1)
-//cpu.cnot(control: 3, target: 0); core.cx(n - 1 - 3, n - 1 - 0)
+//cpu.apply(.t, to: 1);          core.t(1)
+//cpu.apply(.s, to: 3);          core.s(3)
+//cpu.apply(.y, to: 0);          core.y(0)
+//cpu.apply(.rz(0.7), to: 2);    core.rz(0.7, 2)
+//cpu.apply(.ry(1.3), to: 4);    core.ry(1.3, 4)
+//cpu.cnot(control: 0, target: 3); core.cx(0, 3)
+//cpu.apply(.x, to: 4, controls: [1, 2]);  core.ccx(1, 2, 4)   // Toffoli
+//cpu.apply(.z, to: 2, controls: [4]);     core.cz(4, 2)               // CZ
+//cpu.apply(.ry(-0.4), to: 1);   core.ry(-0.4, 1)
+//cpu.cnot(control: 3, target: 0); core.cx(3, 0)
 //
 //let coreState = core.run()
 //var maxDiff = 0.0
@@ -301,6 +297,6 @@ print((0..<8).map { bitReversed($0, bits: 3) })
 // n = 20: ~1.76e13 bytes (16 TB) vs ~1.68e7 bytes (16 MB)
 //
 // Core's `StateVector.applyLocal` (Quantum/StateVector+Kernels.swift) generalizes this page
-// to k-qubit gate tensors (qubit 0 = MSB), with dedicated diagonal and 1-qubit fast paths.
+// to k-qubit gate tensors (same qubit-0-is-MSB convention), with dedicated diagonal and 1-qubit fast paths.
 
 //: [Next](@next)
