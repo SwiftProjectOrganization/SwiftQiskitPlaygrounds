@@ -30,6 +30,18 @@ import SwiftQiskit
 // §1 — The code
 // ------------------------------------------------------------
 
+HadamardGate.matrix
+PauliXGate.matrix
+PauliYGate.matrix
+PauliZGate.matrix
+SGate.matrix
+TGate.matrix
+RZGate.matrix(theta: .pi/4)
+
+let ket0 = Ket([Complex(1), Complex(0)])
+ket0 ⊗ ket0
+
+
 typealias Amplitude = Complex   // SwiftQiskit's own complex number
 
 /// A single-qubit gate as a 2×2 unitary, row-major: [[u00, u01], [u10, u11]].

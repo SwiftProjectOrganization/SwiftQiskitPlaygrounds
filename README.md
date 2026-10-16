@@ -3,7 +3,7 @@
 Xcode playground pages for [SwiftQiskit](https://github.com/SwiftProjectOrganization/SwiftQiskit),
 using the library as a remote Swift package (from 0.7.2).
 
-Pages: `01Qubits`, `02StateVectorCPU` (formerly `42StateVectorCPU`).
+Pages: `01Qubits`, `02StateVectorCPU` (formerly `42StateVectorCPU`), `03ApplyingGates`.
 
 ## Running
 1. Open `SwiftQiskitPlaygrounds.xcodeproj`.
