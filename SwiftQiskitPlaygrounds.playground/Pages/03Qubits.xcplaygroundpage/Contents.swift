@@ -10,6 +10,8 @@ import SwiftQiskitViews
 // §1 — Single-qubit examples
 // ------------------------------------------------------------
 
+Complex(2,1) * Complex(3,-1)
+
 // Single qubit examples. See 02Bloch2d for more qubit examples.
 let q0: Ket = .zero
 let q1: Ket = .plusI
@@ -21,7 +23,8 @@ let q1: Ket = .plusI
 // Multi qubit creation examples
 let sv0: StateVector = Ket("000")
 let sv1: StateVector = Ket("010")
-let sv2: StateVector = .zero ⊗ .plusI ⊗ .zero ⊗ .zero
+let sv2: StateVector = .zero ⊗ .plusI ⊗ .zero
+let sv3: StateVector = .zero ⊗ .plusI ⊗ .zero ⊗ .zero
 
 // ------------------------------------------------------------
 // §3 — circuit1 stages
@@ -44,6 +47,7 @@ stages1.append(("P(π/2) → |+i⟩", BlochVector(circuit1.run())))
 circuit1.p(3.142, 0)
 stages1.append(("P(π) → |−i⟩", BlochVector(circuit1.run())))
 circuit1.run().probabilities
+
 
 // ------------------------------------------------------------
 // §4 — circuit2 stages
