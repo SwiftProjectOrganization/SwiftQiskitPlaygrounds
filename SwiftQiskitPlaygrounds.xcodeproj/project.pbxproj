@@ -18,6 +18,14 @@
 		B75DC26B08D053F51E75AA54 /* PlaygroundDeps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundDeps.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		D4CC3EAF3089203B00F10644 /* Documentation */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Documentation;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
 /* Begin PBXFrameworksBuildPhase section */
 		DF97E4C07C8807E17A8AC50E /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
@@ -37,6 +45,7 @@
 				00EE1133EB61B6C0D6CA9BA0 /* SwiftQiskitPlaygrounds.playground */,
 				A67E0E24CC9923CE1A67AB04 /* PlaygroundDeps */,
 				9A2D1A0F0B3FFF404DD92371 /* Products */,
+				D4CC3EAF3089203B00F10644 /* Documentation */,
 			);
 			sourceTree = "<group>";
 		};

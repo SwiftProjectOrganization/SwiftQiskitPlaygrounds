@@ -10,8 +10,6 @@ import SwiftQiskitViews
 // §1 — Single-qubit examples
 // ------------------------------------------------------------
 
-Complex(2,1) * Complex(3,-1)
-
 // Single qubit examples. See 02Bloch2d for more qubit examples.
 let q0: Ket = .zero
 let q1: Ket = .plusI
