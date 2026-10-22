@@ -14,8 +14,10 @@ import SwiftQiskitViews
 // §1 — Basis transformations (preview of 41BasisTransformations §1–4)
 // ------------------------------------------------------------
 
-// Given |ψ⟩ in the computational basis {|0⟩, |1⟩}, what are its coordinates in a
-// different basis, e.g. {|+⟩, |−⟩}? Stack the new basis kets as the columns of T, so
+// Given |ψ⟩ in the computational basis {|0⟩, |1⟩}, what are its
+// coordinates in a different basis, e.g. {|+⟩, |−⟩}?
+
+// Stack the new basis kets as the columns of T, so
 // |ψ⟩ = T·c; since T is unitary, c = T⁻¹|ψ⟩ = T†|ψ⟩,
 // the library's own `†` (Matrix.adjoint) already is T⁻¹ for a unitary T.
 
@@ -42,11 +44,11 @@ Tdag.multiply(by: Ket.plus.amplitudes)
 Tdag.multiply(by: Ket.plusI.amplitudes)
 // an even split again — |+i⟩ is as undetermined in ± as |0⟩ is
 
-let ket1 = Ket([Complex(0.8), Complex(0.4243, 0.4243)])
-
 // ------------------------------------------------------------
 // §2 — Basis transformations on ket1
 // ------------------------------------------------------------
+
+let ket1 = Ket([Complex(0.8), Complex(0.4243, 0.4243)])
 
 // Same machinery on ket1, which isn't a Z eigenstate either:
 let c1 = Tdag.multiply(by: ket1.amplitudes)
