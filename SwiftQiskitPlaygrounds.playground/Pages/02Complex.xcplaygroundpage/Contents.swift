@@ -32,7 +32,7 @@ print(c6)
 let c7 = c1 * c3.conjugate / Complex(5.0)
 
 //------------------------------------------------------------
-// §2 — Matrix examples
+// §2 — Complex matrix examples - what is used in SwiftQiskit
 // ------------------------------------------------------------
 
 let mat1 = Matrix([[Complex(1,-2), Complex(2, -1)],
