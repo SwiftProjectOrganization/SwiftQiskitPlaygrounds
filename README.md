@@ -38,7 +38,7 @@ Pages are chained with Previous/Next links and live in
 | `01Matrices` | Matrix and `GenericMatrix` arithmetic (math warm-up) |
 | `02Complex` | `Complex` arithmetic (math warm-up) |
 
-Pages 03–26 follow the SwiftQiskitApp introduction. Pages 03–16 exist so far; the
+Pages 03–26 follow the SwiftQiskitApp introduction. Pages 03–17 exist so far; the
 remaining chapters will be added as the series grows.
 
 | Page | Topic |
@@ -57,6 +57,7 @@ remaining chapters will be added as the series grows.
 | `14DeutschJozsa` | Deutsch–Jozsa and Bernstein–Vazirani: one query, n qubits |
 | `15Grover` | Grover's search: oracle, diffusion, over-rotation, CCZ from T gates |
 | `16QFT` | The quantum Fourier transform and phase estimation |
+| `17Shor` | Shor's algorithm compiled for N = 15: order finding and the a = 14 failure |
 
 Extra pages:
 
