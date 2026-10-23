@@ -38,8 +38,8 @@ Pages are chained with Previous/Next links and live in
 | `01Matrices` | Matrix and `GenericMatrix` arithmetic (math warm-up) |
 | `02Complex` | `Complex` arithmetic (math warm-up) |
 
-Pages 03–26 follow the SwiftQiskitApp introduction. Pages 03–25 exist so far; the
-remaining chapters will be added as the series grows.
+Pages 03–26 follow the SwiftQiskitApp introduction, one page per chapter (Chapters 5 and 6
+share `06BlochSpheres`).
 
 | Page | Topic |
 |------|-------|
@@ -66,6 +66,7 @@ remaining chapters will be added as the series grows.
 | `23VQE` | VQE for H₂: a one-parameter ansatz, parameter-shift gradients, and gradient descent |
 | `24Trotter` | Hamiltonian simulation: an `expm` ground truth and first- vs second-order Trotter error |
 | `25QuantumWalks` | Discrete-time quantum walks: ballistic spreading and coin-phase symmetry |
+| `26TensorDiagrams` | Circuits as tensor networks: `TensorNetwork`, `contract()` vs `run()` |
 
 Extra pages:
 
