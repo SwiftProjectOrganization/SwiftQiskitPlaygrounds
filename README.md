@@ -2,9 +2,9 @@
 
 Xcode playground pages for [SwiftQiskit](https://github.com/SwiftProjectOrganization/SwiftQiskit),
 a Swift quantum-circuit simulator. The library is used as a remote Swift package
-(up to next major from 0.7.2; currently resolved to 0.8.0).
+(currently resolved to 0.8.0).
 
-**Playground pages 03–26 are based on the introductory documents in
+**Playground pages 03–<50 are based on the introductory documents in
 [SwiftQiskitApp](https://github.com/SwiftProjectOrganization/SwiftQiskitApp)**
 (`Docs/Introduction/`). For example, `04Dirac` follows `04-DiracNotation.md`.
 

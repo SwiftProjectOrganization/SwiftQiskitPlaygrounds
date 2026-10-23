@@ -1,6 +1,17 @@
 //: [Previous](@previous)
 /*:
  # Bases transformations
+
+ Every other page reads amplitudes in the computational (Z) basis {|0⟩, |1⟩}. This page
+ asks the reverse question: what are a state's coordinates in a different basis, such as
+ {|+⟩, |−⟩} or {|+i⟩, |−i⟩}?
+
+ The recipe: stack the new basis kets as the columns of a matrix `T`, so `|ψ⟩ = T·c`.
+ Because `T` is unitary, `c = T†|ψ⟩`. Row j of `T†` times `|ψ⟩` is just the inner product
+ `⟨bⱼ|ψ⟩`. Squaring the coordinates gives the measurement probabilities in the new basis,
+ so the same state can be certain in one basis and an even split in another.
+
+ This is a preview of SwiftQiskit's `41BasisTransformations` page.
  */
 
 import Foundation

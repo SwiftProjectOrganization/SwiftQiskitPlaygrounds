@@ -1,4 +1,22 @@
 //: [Previous](@previous)
+/*:
+ # Qubits: amplitudes and probabilities
+
+ Follows Chapter 3 of the SwiftQiskitApp introduction (`Docs/Introduction/03-Qubits.md`).
+
+ A qubit is a `StateVector` (`Ket` is a typealias) holding two complex amplitudes α and β, one
+ per outcome. The type enforces `|α|² + |β|² = 1`: `init` normalizes on construction and every
+ gate renormalizes afterward.
+
+ A `StateVector` supports two readings:
+ - `.amplitudes` is the complete description of the state;
+ - `.probabilities` is what a measurement can deliver — the Born rule `|amplitude|²`, which
+   throws phase away. `|+⟩` and `|+i⟩` are different states with identical probabilities.
+
+ The two circuits below make the point: in `H;P;P` only the phase moves, while in `H;Z;H` the
+ sign flip from `Z` is invisible until the second `H` turns it into a definite `|1⟩`
+ (explained in 08Interference). Each stage is shown live on a Bloch sphere.
+ */
 
 import Foundation
 import SwiftUI

@@ -1,4 +1,18 @@
 //: [Previous](@previous)
+/*:
+ # Complex numbers and complex matrices
+
+ Quantum amplitudes are complex numbers, so `Complex` is the scalar type that every
+ `StateVector` and gate matrix is built from.
+
+ §1 covers `Complex` arithmetic: construction, `*`, `/` and `conjugate`, and division
+ written by hand as `z · w̄ / |w|²`.
+ §2 moves on to `Matrix` with `Complex` entries, the type SwiftQiskit uses for gates. It
+ shows the dagger `†` (conjugate transpose), `*` and `⊗` on non-square shapes.
+
+ For a fuller tour (magnitude and phase, inner products, unitary and Hermitian matrices),
+ see the SwiftQiskit `40ComplexAndMatrices` page.
+ */
 
 import Foundation
 import SwiftUI

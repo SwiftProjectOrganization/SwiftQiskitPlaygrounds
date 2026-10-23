@@ -16,6 +16,7 @@
 		00EE1133EB61B6C0D6CA9BA0 /* SwiftQiskitPlaygrounds.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = SwiftQiskitPlaygrounds.playground; sourceTree = "<group>"; };
 		AC220A84433DB63AA969F46D /* PlaygroundDeps.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PlaygroundDeps.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B75DC26B08D053F51E75AA54 /* PlaygroundDeps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundDeps.swift; sourceTree = "<group>"; };
+		D4AE4176308B9ED700D217E5 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -46,6 +47,7 @@
 				A67E0E24CC9923CE1A67AB04 /* PlaygroundDeps */,
 				9A2D1A0F0B3FFF404DD92371 /* Products */,
 				D4CC3EAF3089203B00F10644 /* Documentation */,
+				D4AE4176308B9ED700D217E5 /* README.md */,
 			);
 			sourceTree = "<group>";
 		};

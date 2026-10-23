@@ -1,4 +1,17 @@
 //: [Previous](@previous)
+/*:
+ # Matrices: shapes, products and the tensor product
+
+ A warm-up with real-valued matrices before the complex ones used everywhere else.
+ SwiftQiskit's `Matrix` holds only `Complex` elements, so this page uses `GenericMatrix`,
+ which works with `Double` here (integer literals are converted to `Double`).
+
+ The examples cover a 2×2 matrix, a row vector and a column vector, then matrix
+ multiplication `*`, element-wise `+` and the tensor product `⊗`. Notice how `⊗` grows the
+ dimensions: a 1×2 ⊗ 2×2 gives a 2×4.
+
+ Every later page uses `Matrix` with `Complex(…)` entries; see 02Complex.
+ */
 
 import Foundation
 import SwiftUI
