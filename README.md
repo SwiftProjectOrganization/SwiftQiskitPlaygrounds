@@ -38,7 +38,7 @@ Pages are chained with Previous/Next links and live in
 | `01Matrices` | Matrix and `GenericMatrix` arithmetic (math warm-up) |
 | `02Complex` | `Complex` arithmetic (math warm-up) |
 
-Pages 03–26 follow the SwiftQiskitApp introduction. Pages 03–19 exist so far; the
+Pages 03–26 follow the SwiftQiskitApp introduction. Pages 03–20 exist so far; the
 remaining chapters will be added as the series grows.
 
 | Page | Topic |
@@ -60,6 +60,7 @@ remaining chapters will be added as the series grows.
 | `17Shor` | Shor's algorithm compiled for N = 15: order finding and the a = 14 failure |
 | `18Teleportation` | Teleportation (deferred measurement) and superdense coding |
 | `19ErrorCorrection` | The 3-qubit bit-flip code: syndromes, correction, and where it breaks |
+| `20CHSH` | The CHSH inequality: classical bound 2, a Bell pair at 2√2, and the plotted gap |
 
 Extra pages:
 
