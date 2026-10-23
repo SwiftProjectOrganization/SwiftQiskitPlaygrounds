@@ -38,7 +38,7 @@ Pages are chained with Previous/Next links and live in
 | `01Matrices` | Matrix and `GenericMatrix` arithmetic (math warm-up) |
 | `02Complex` | `Complex` arithmetic (math warm-up) |
 
-Pages 03–26 follow the SwiftQiskitApp introduction. Pages 03–13 exist so far; the
+Pages 03–26 follow the SwiftQiskitApp introduction. Pages 03–14 exist so far; the
 remaining chapters will be added as the series grows.
 
 | Page | Topic |
@@ -54,6 +54,7 @@ remaining chapters will be added as the series grows.
 | `11TensorProducts` | Tensor products and composite systems |
 | `12Entanglement` | Entanglement: Bell and GHZ states |
 | `13Deutsch` | Oracles and phase kickback: Deutsch's algorithm |
+| `14DeutschJozsa` | Deutsch–Jozsa and Bernstein–Vazirani: one query, n qubits |
 
 Extra pages:
 
