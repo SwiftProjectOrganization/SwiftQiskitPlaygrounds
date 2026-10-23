@@ -38,7 +38,7 @@ Pages are chained with Previous/Next links and live in
 | `01Matrices` | Matrix and `GenericMatrix` arithmetic (math warm-up) |
 | `02Complex` | `Complex` arithmetic (math warm-up) |
 
-Pages 03–26 follow the SwiftQiskitApp introduction. Pages 03–23 exist so far; the
+Pages 03–26 follow the SwiftQiskitApp introduction. Pages 03–24 exist so far; the
 remaining chapters will be added as the series grows.
 
 | Page | Topic |
@@ -64,6 +64,7 @@ remaining chapters will be added as the series grows.
 | `21Noise` | Density matrices, Kraus channels, coherence decay, and entanglement entropy |
 | `22Tomography` | State tomography from shots: basis rotations, 1/√N error, and unphysical estimates |
 | `23VQE` | VQE for H₂: a one-parameter ansatz, parameter-shift gradients, and gradient descent |
+| `24Trotter` | Hamiltonian simulation: an `expm` ground truth and first- vs second-order Trotter error |
 
 Extra pages:
 
