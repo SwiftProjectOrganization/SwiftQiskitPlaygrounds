@@ -46,6 +46,7 @@ remaining chapters will be added as the series grows.
 | `03Qubits` | Single-qubit states and Bloch sphere views |
 | `04Dirac` | Dirac notation, `Ket`/`Bra`, and expectation values |
 | `05BasesTransformation` | Changing basis |
+| `06BlochSpheres` | The Bloch sphere in 2D and 3D: canonical states, projections, θ/φ |
 | `07Gates` | Applying a gate the textbook way, with `I ⊗ … ⊗ U ⊗ … ⊗ I` |
 | `08Interference` | Phase, interference, and why Z hides |
 | `09Measurement` | Measurement, shots, and statistics |

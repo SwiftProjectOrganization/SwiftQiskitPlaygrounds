@@ -28,7 +28,7 @@ import SwiftQiskitViews
 // §1 — Single-qubit examples
 // ------------------------------------------------------------
 
-// Single qubit examples. See 02Bloch2d for more qubit examples.
+// Single qubit examples. See 06BlochSpheres for more qubit examples.
 let q0: Ket = .zero
 print("print(q0):\n\(q0)\n")
 
