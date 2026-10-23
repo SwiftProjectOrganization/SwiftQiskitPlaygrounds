@@ -1,14 +1,82 @@
 # SwiftQiskitPlaygrounds
 
 Xcode playground pages for [SwiftQiskit](https://github.com/SwiftProjectOrganization/SwiftQiskit),
-using the library as a remote Swift package (from 0.7.2).
+a Swift quantum-circuit simulator. The library is used as a remote Swift package
+(up to next major from 0.7.2; currently resolved to 0.8.0).
 
-Pages: `01Qubits`, `02StateVectorCPU` (formerly `42StateVectorCPU`), `03ApplyingGates`, `04Dirac`.
+**Playground pages 03–26 are based on the introductory documents in
+[SwiftQiskitApp](https://github.com/SwiftProjectOrganization/SwiftQiskitApp)**
+(`Docs/Introduction/`). For example, `04Dirac` follows `04-DiracNotation.md`.
 
-## Running
-1. Open `SwiftQiskitPlaygrounds.xcodeproj`.
-2. Select the `PlaygroundDeps` scheme (My Mac) and build. It links `SwiftQiskit` and
-   `SwiftQiskitViews`, which the playground imports (`buildActiveScheme='true'`).
-3. Open a page under `SwiftQiskitPlaygrounds.playground/Pages/` and run it.
+## Requirements
+- A Mac with Xcode and the macOS 27 SDK (the project's deployment target is macOS 27.0).
+- Network access the first time, so Xcode can fetch the SwiftQiskit package.
 
-Note: `01Qubits` links to `PlaygroundDocs/` guides that still live in the SwiftQiskit repo.
+## Running the playgrounds
+1. Open `SwiftQiskitPlaygrounds.xcodeproj` (not the `.playground` on its own), so the
+   SwiftQiskit package is resolved.
+2. Select the `PlaygroundDeps` scheme with **My Mac** as the run destination, then build (⌘B).
+   `PlaygroundDeps` links `SwiftQiskit` and `SwiftQiskitViews`, which the pages import. The
+   playground is set to build the active scheme (`buildActiveScheme='true'`).
+3. Open a page under `SwiftQiskitPlaygrounds.playground/Pages/` and run it
+   (**Editor ▸ Execute Playground**, or the run button next to a line).
+4. Use **Editor ▸ Show Rendered Markup** to read the page text, and open the live view
+   to see SwiftUI output such as the Bloch sphere.
+
+### Troubleshooting
+- `No such module 'SwiftQiskit'`: build the `PlaygroundDeps` scheme first. If that doesn't
+  help, use **Product ▸ Clean Build Folder** and build again.
+- Package problems: **File ▸ Packages ▸ Resolve Package Versions**, or
+  **Update to Latest Package Versions**.
+
+## Pages
+Pages are chained with Previous/Next links and live in
+`SwiftQiskitPlaygrounds.playground/Pages/`.
+
+| Page | Topic |
+|------|-------|
+| `01Matrices` | Matrix and `GenericMatrix` arithmetic (math warm-up) |
+| `02Complex` | `Complex` arithmetic (math warm-up) |
+
+Pages 03–26 follow the SwiftQiskitApp introduction. Pages 03–13 exist so far; the
+remaining chapters will be added as the series grows.
+
+| Page | Topic |
+|------|-------|
+| `03Qubits` | Single-qubit states and Bloch sphere views |
+| `04Dirac` | Dirac notation, `Ket`/`Bra`, and expectation values |
+| `05BasesTransformation` | Changing basis |
+| `07Gates` | Applying a gate the textbook way, with `I ⊗ … ⊗ U ⊗ … ⊗ I` |
+| `08Interference` | Phase, interference, and why Z hides |
+| `09Measurement` | Measurement, shots, and statistics |
+| `10Superposition` | Superposition across a register |
+| `11TensorProducts` | Tensor products and composite systems |
+| `12Entanglement` | Entanglement: Bell and GHZ states |
+| `13Deutsch` | Oracles and phase kickback: Deutsch's algorithm |
+
+Extra pages:
+
+| Page | Topic |
+|------|-------|
+| `50StateVectorCPU` | Applying gates directly to a state vector, without building 2ⁿ × 2ⁿ matrices |
+
+## API documentation
+The `Documentation/` folder describes the SwiftQiskit API used by the pages:
+
+| Document | Covers |
+|----------|--------|
+| [01-ComplexAPI.md](Documentation/01-ComplexAPI.md) | `Complex`: properties, constants, arithmetic |
+| [02-MatrixAPI.md](Documentation/02-MatrixAPI.md) | `Matrix` / `GenericMatrix`: initializers, arithmetic, adjoint, trace |
+| [03-StateVectorAPI.md](Documentation/03-StateVectorAPI.md) | `StateVector`: amplitudes, probabilities, gates, measurement |
+| [04-DiracAPI.md](Documentation/04-DiracAPI.md) | `Ket`, `Bra`, the `†` operator, inner/outer products, expectation values, `⊗` |
+
+For the full library, see the [SwiftQiskit repository](https://github.com/SwiftProjectOrganization/SwiftQiskit),
+including its `PlaygroundDocs/` guides.
+
+## Repository layout
+| Path | Contents |
+|------|----------|
+| `SwiftQiskitPlaygrounds.xcodeproj` | Xcode project with the SwiftQiskit package dependency |
+| `SwiftQiskitPlaygrounds.playground` | The playground pages and shared `Sources/BlochSphereView.swift` |
+| `PlaygroundDeps/` | Framework target that links `SwiftQiskit` and `SwiftQiskitViews` |
+| `Documentation/` | API reference documents |
