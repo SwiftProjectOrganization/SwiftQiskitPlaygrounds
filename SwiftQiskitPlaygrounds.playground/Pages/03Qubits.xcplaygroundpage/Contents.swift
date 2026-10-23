@@ -53,7 +53,7 @@ let sv3: StateVector = .zero ⊗ .plusI ⊗ .zero
 print("print(sv3):\n\(sv3)\n")
 
 let sv4: StateVector = .zero ⊗ .plusI ⊗ .zero ⊗ .zero
-print("print(sv3):\n\(sv3)\n")
+print("print(sv4):\n\(sv4)\n")
 
 // ------------------------------------------------------------
 // §3 — circuit1 stages
