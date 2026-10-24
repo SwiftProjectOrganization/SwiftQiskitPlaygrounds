@@ -2,7 +2,7 @@
 
 Xcode playground pages for [SwiftQiskit](https://github.com/SwiftProjectOrganization/SwiftQiskit),
 a Swift quantum-circuit simulator. The library is used as a remote Swift package
-(currently resolved to 0.8.0).
+(currently resolved to 0.8.1).
 
 **Playground pages 03–<50 are based on the introductory documents in
 [SwiftQiskitApp](https://github.com/SwiftProjectOrganization/SwiftQiskitApp)**
@@ -75,7 +75,8 @@ Extra pages:
 | `50StateVectorCPU` | Applying gates directly to a state vector, without building 2ⁿ × 2ⁿ matrices |
 
 ## API documentation
-The `Documentation/` folder describes the SwiftQiskit API used by the pages:
+The `Documentation/` folder describes the SwiftQiskit API used by the pages, plus (in 09) the
+library versions of the tools pages 21–24 build by hand:
 
 | Document | Covers |
 |----------|--------|
@@ -83,14 +84,18 @@ The `Documentation/` folder describes the SwiftQiskit API used by the pages:
 | [02-MatrixAPI.md](Documentation/02-MatrixAPI.md) | `Matrix` / `GenericMatrix`: initializers, arithmetic, adjoint, trace |
 | [03-StateVectorAPI.md](Documentation/03-StateVectorAPI.md) | `StateVector`: amplitudes, probabilities, gates, measurement |
 | [04-DiracAPI.md](Documentation/04-DiracAPI.md) | `Ket`, `Bra`, the `†` operator, inner/outer products, expectation values, `⊗` |
+| [05-QuantumCircuitAPI.md](Documentation/05-QuantumCircuitAPI.md) | `QuantumCircuit`: gate methods, `run()`, shot and basis measurement; `SimulationResult` |
+| [06-GatesAPI.md](Documentation/06-GatesAPI.md) | Gate matrices (`PauliXGate`, `RXGate`, `CNOTGate`, …) and `deg2rad`/`rad2deg` |
+| [07-TensorNetworkAPI.md](Documentation/07-TensorNetworkAPI.md) | `TensorNetwork`: nodes, edges, and `contract()` as a check on `run()` |
+| [08-ViewsAPI.md](Documentation/08-ViewsAPI.md) | `CHSHChartView` and `TensorNetworkView` live views |
+| [09-NoiseTomographyVariationalAPI.md](Documentation/09-NoiseTomographyVariationalAPI.md) | `DensityMatrix`, Kraus channels and noise, `StateTomography`, `PauliString`/`Hamiltonian`, parameter shift and gradient descent |
 
-For the full library, see the [SwiftQiskit repository](https://github.com/SwiftProjectOrganization/SwiftQiskit),
-including its `PlaygroundDocs/` guides.
+For the full library, see the [SwiftQiskit repository](https://github.com/SwiftProjectOrganization/SwiftQiskit).
 
 ## Repository layout
 | Path | Contents |
 |------|----------|
 | `SwiftQiskitPlaygrounds.xcodeproj` | Xcode project with the SwiftQiskit package dependency |
-| `SwiftQiskitPlaygrounds.playground` | The playground pages and shared `Sources/BlochSphereView.swift` |
+| `SwiftQiskitPlaygrounds.playground` | The playground pages |
 | `PlaygroundDeps/` | Framework target that links `SwiftQiskit` and `SwiftQiskitViews` |
 | `Documentation/` | API reference documents |

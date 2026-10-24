@@ -6,8 +6,9 @@
  by chopping it into gates.
 
  - `H = −J·Z⊗Z − h·(X⊗I + I⊗X)` with `J = 1.0`, `h = 0.5`.
- - `Matrix` has no matrix exponential, so a page-level `expm` (scaling-and-squaring Taylor
-   series) serves as ground truth, itself checked against the exact `RXGate`.
+ - `Matrix.expm()` (a scaling-and-squaring Taylor series) serves as ground truth, itself
+   checked against the exact `RXGate`. It has no implicit −i, so e^(−iHt) is
+   `(H * Complex(0, -t)).expm()`.
  - `exp(−iθ·Z⊗Z/2)` is exactly `cx(0,1); rz(θ,1); cx(0,1)`.
  - First-order Trotter error shrinks as 1/n; the second-order (Suzuki) split shrinks as 1/n².
  - The error exists because `Z⊗Z` and `X⊗I` do not commute: with `h = 0` one step is exact.
@@ -15,7 +16,7 @@
  - One full Trotter step is `cx`, `rz`, `cx`, `rx`, `rx`, so the circuit form matches the
    matrix form.
 
- Limit: the `expm` here is a small Taylor series for 4 × 4 matrices, not a general-purpose routine.
+ Limit: `expm` builds dense 2ⁿ × 2ⁿ matrices, so the matrix side only scales to a few qubits.
 
  Follows Chapter 24 of the SwiftQiskitApp introduction.
  */
@@ -50,26 +51,8 @@ let Hising = (ZZ * (-J)) + (X ⊗ I2) * (-h) + (I2 ⊗ X) * (-h)
 // §2 — An expm ground truth
 // ------------------------------------------------------------
 
-func expm(_ A: Matrix, terms: Int = 20) -> Matrix {
-    let n = A.rows
-    var normEst = 0.0
-    for i in 0..<n { for j in 0..<n { normEst = max(normEst, A[i, j].magnitude) } }
-    var s = 0
-    var scaled = A
-    var normS = normEst
-    while normS > 0.5 { scaled = scaled * 0.5; normS *= 0.5; s += 1 }
-    var result = Matrix.identity(size: n)
-    var term = Matrix.identity(size: n)
-    for k in 1...terms {
-        term = (term * scaled) * (1.0 / Double(k))
-        result = result + term
-    }
-    for _ in 0..<s { result = result * result }
-    return result
-}
-
 let theta = 0.7
-let expmRX = expm(X * Complex(0, -theta / 2))
+let expmRX = (X * Complex(0, -theta / 2)).expm()
 print("expm(-iθX/2) vs. RXGate.matrix(θ=0.7): max diff = \(String(format: "%.2e", maxDiff(expmRX, RXGate.matrix(theta: theta))))")
 // about 1e-16: expm is trustworthy
 
@@ -83,7 +66,7 @@ func zzViaGates(_ theta: Double) -> Matrix {
     return cx * rz1 * cx
 }
 
-let expmZZ = expm(ZZ * Complex(0, -theta / 2))
+let expmZZ = (ZZ * Complex(0, -theta / 2)).expm()
 print("expm(-iθZ⊗Z/2) vs. cx;rz;cx (θ=0.7): max diff = \(String(format: "%.2e", maxDiff(expmZZ, zzViaGates(theta))))")
 // about 1e-16: an exact identity, not an approximation
 
@@ -109,7 +92,7 @@ func trotterUnitary(_ t: Double, _ n: Int, order: Int) -> Matrix {
 }
 
 let t = 1.0
-let exact = expm(Hising * Complex(0, -t))
+let exact = (Hising * Complex(0, -t)).expm()
 
 for (title, order) in [("1st-order Trotter error (max diff from exact), t=1:", 1),
                        ("2nd-order (Suzuki) Trotter error:", 2)] {
@@ -133,7 +116,7 @@ var commNorm = 0.0
 for i in 0..<4 { for j in 0..<4 { commNorm = max(commNorm, commutator[i, j].magnitude) } }
 print("\nmax |[Z⊗Z, X⊗I]| entry: \(fmt(commNorm))")    // 2.000000
 
-let exactComm = expm((ZZ * (-J)) * Complex(0, -t))
+let exactComm = ((ZZ * (-J)) * Complex(0, -t)).expm()
 print("commuting-only Hamiltonian (h=0), n=1 error: \(String(format: "%.2e", maxDiff(exactComm, zzViaGates(-2 * J * t))))")
 // 0: with one term there is nothing to split
 
@@ -142,7 +125,7 @@ let psi0 = StateVector(qubits: 2)
 
 func zExpectation(_ tVal: Double, n: Int?) -> Double {
     var s = psi0
-    s.apply(n.map { trotterUnitary(tVal, $0, order: 1) } ?? expm(Hising * Complex(0, -tVal)))
+    s.apply(n.map { trotterUnitary(tVal, $0, order: 1) } ?? (Hising * Complex(0, -tVal)).expm())
     return expectationZ0(s)
 }
 
