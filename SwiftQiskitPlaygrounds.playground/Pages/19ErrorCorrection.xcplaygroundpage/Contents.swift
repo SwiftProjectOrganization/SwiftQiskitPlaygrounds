@@ -8,13 +8,13 @@
 
  - Register: q0 holds |ψ⟩, `cx(0,1); cx(0,2)` encodes it as α|000⟩ + β|111⟩ (not cloning).
  - Syndrome ancillas q3, q4 learn the parities q0⊕q1 and q1⊕q2, and nothing else.
- - SwiftQiskit has no Toffoli with mixed controls, so the correction is a 32 × 32
-   permutation matrix applied with `apply(_:)`.
+ - The correction needs Toffolis that fire on 0 as well as 1, and `ccx` only fires on 1s,
+   so it is a 32 × 32 permutation matrix applied with `apply(_:)`.
  - A continuous `rx(θ)` error is digitized exactly: fidelity 1 for every θ, syndrome
    weights cos²(θ/2) and sin²(θ/2).
  - Two simultaneous errors fool the code silently; p_L = 3p² − 2p³.
  - Conjugating with `h` turns the same code into a phase-flip code (HZH = X).
- - A second, equivalent circuit uses no ancillas: decode, then a Toffoli built from CCZ.
+ - A second, equivalent circuit uses no ancillas: decode, then a single `ccx`.
 
  Limit: the correction is applied coherently to every branch rather than measuring the
  syndrome and branching on the result.
@@ -243,15 +243,10 @@ for (name, errs) in cases {
 }
 
 // ------------------------------------------------------------
-// §7 — A circuit with no ancillas: Toffoli from CCZ
+// §7 — A circuit with no ancillas: a Toffoli
 // ------------------------------------------------------------
 // Decoding again routes the syndrome onto q1, q2 themselves; a Toffoli with controls
-// q1, q2 and target q0 then fixes q0. CCZ comes from t, tdg and cx (Chapter 15).
-
-func ccz(_ qc: QuantumCircuit, _ a: Int, _ b: Int, _ c: Int) {
-    qc.cx(b, c); qc.tdg(c); qc.cx(a, c); qc.t(c); qc.cx(b, c); qc.tdg(c); qc.cx(a, c)
-    qc.t(b); qc.t(c); qc.cx(a, b); qc.t(a); qc.tdg(b); qc.cx(a, b)
-}
+// q1, q2 and target q0 then fixes q0.
 
 func compactCircuit(errors: [Int]) -> QuantumCircuit {
     let qc = QuantumCircuit(qubits: 3)
@@ -259,7 +254,7 @@ func compactCircuit(errors: [Int]) -> QuantumCircuit {
     qc.cx(0, 1); qc.cx(0, 2)
     for q in errors { qc.x(q) }
     qc.cx(0, 1); qc.cx(0, 2)                      // decode: the syndrome lands on q1, q2
-    qc.h(0); ccz(qc, 1, 2, 0); qc.h(0)            // Toffoli(controls q1, q2; target q0)
+    qc.ccx(1, 2, 0)                               // Toffoli(controls q1, q2; target q0)
     return qc
 }
 

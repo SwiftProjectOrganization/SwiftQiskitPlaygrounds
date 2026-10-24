@@ -201,15 +201,18 @@ func ccz(_ qc: QuantumCircuit, _ a: Int, _ b: Int, _ c: Int) {
 var cczMatrix = Matrix.identity(size: 8)
 cczMatrix[7, 7] = Complex(-1)
 
-print("\nbasis  gates-CCZ  matrix-CCZ  match")
+print("\nbasis  gates-CCZ  matrix-CCZ  mcz  match")
 for basis in 0..<8 {
     let gateQC = QuantumCircuit(qubits: 3)
     let matrixQC = QuantumCircuit(qubits: 3)
     for q in 0..<3 where (basis >> (2 - q)) & 1 == 1 { gateQC.x(q); matrixQC.x(q) }
     ccz(gateQC, 0, 1, 2)
     matrixQC.apply(cczMatrix)
-    let g = gateQC.run()[basis].real, m = matrixQC.run()[basis].real
-    print(" \(basis)     \(String(format: "%+.1f", g))       \(String(format: "%+.1f", m))       \(abs(g - m) < 1e-9)")
+    let mczQC = QuantumCircuit(qubits: 3)
+    for q in 0..<3 where (basis >> (2 - q)) & 1 == 1 { mczQC.x(q) }
+    mczQC.mcz([0, 1], 2)
+    let g = gateQC.run()[basis].real, m = matrixQC.run()[basis].real, z = mczQC.run()[basis].real
+    print(" \(basis)     \(String(format: "%+.1f", g))       \(String(format: "%+.1f", m))       \(String(format: "%+.1f", z))   \(abs(g - m) < 1e-9 && abs(g - z) < 1e-9)")
 }
 
 func oracle3(_ qc: QuantumCircuit, marked: Int) {
