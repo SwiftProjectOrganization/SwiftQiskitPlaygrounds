@@ -35,10 +35,10 @@ Pages are chained with Previous/Next links and live in
 
 | Page | Topic |
 |------|-------|
-| `01Matrices` | Matrix and `GenericMatrix` arithmetic (math warm-up) |
-| `02Complex` | `Complex` arithmetic (math warm-up) |
+| `01Matrices` | `GenericMatrix` arithmetic with real entries (warm-up for Chapter 2) |
+| `02ComplexAndMatrices` | Complex numbers, amplitude vectors, unitarity and `⊗` (Chapter 2) |
 
-Pages 03–26 follow the SwiftQiskitApp introduction, one page per chapter (Chapters 5 and 6
+Pages 01–02 accompany Chapter 2. Pages 03–26 follow the remaining chapters of the SwiftQiskitApp introduction, one page per chapter (Chapters 5 and 6
 share `06BlochSpheres`).
 
 | Page | Topic |

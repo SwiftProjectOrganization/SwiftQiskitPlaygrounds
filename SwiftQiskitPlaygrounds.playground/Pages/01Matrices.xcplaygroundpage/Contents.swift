@@ -10,7 +10,7 @@
  multiplication `*`, element-wise `+` and the tensor product `⊗`. Notice how `⊗` grows the
  dimensions: a 1×2 ⊗ 2×2 gives a 2×4.
 
- Every later page uses `Matrix` with `Complex(…)` entries; see 02Complex.
+ Every later page uses `Matrix` with `Complex(…)` entries; see 02ComplexAndMatrices.
  */
 
 import Foundation

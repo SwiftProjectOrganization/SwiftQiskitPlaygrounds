@@ -5,8 +5,9 @@ Guidance for Claude Code when working in this repository.
 ## Overview
 
 SwiftQiskitPlaygrounds is a set of Xcode playground pages that exercise the `SwiftQiskit`
-quantum-circuit simulator. Pages `01`–`02` are math warm-ups (`Matrix`, `Complex`); pages
-`03`–`26` follow the chapters of the SwiftQiskitApp introduction
+quantum-circuit simulator. Pages `01`–`02` accompany Chapter 2 (`01Matrices` is a real-valued
+`GenericMatrix` warm-up, `02ComplexAndMatrices` follows the chapter); pages
+`03`–`26` follow the remaining chapters of the SwiftQiskitApp introduction
 (`../SwiftQiskitApp/Docs/Introduction/`), one page per chapter (Chapters 5 and 6 share
 `06BlochSpheres`); `50StateVectorCPU` is an extra page. All simulation lives in the
 `SwiftQiskit` package; this repository contains only pages, a small framework target, and
