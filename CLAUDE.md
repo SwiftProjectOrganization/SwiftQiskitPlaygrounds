@@ -15,7 +15,7 @@ API reference documents.
 
 ## Relationship to the SwiftQiskit package
 
-This project depends on **`SwiftQiskit` as a remote package** (currently resolved to `0.8.1`).
+This project depends on **`SwiftQiskit` as a remote package** (currently resolved to `0.9.0`).
 The package ships two products, `SwiftQiskit` and `SwiftQiskitViews` (SwiftUI views such as
 `BlochVector`, `CHSHChartView`, `TensorNetworkView`). The `PlaygroundDeps` framework target
 links both, and the pages import them:
@@ -105,7 +105,7 @@ messages, and PR descriptions.
 ## Documentation index
 
 - `README.md` — overview, running the playgrounds, page table, API document table.
-- `Documentation/01-ComplexAPI.md` — `Complex`.
+- `Documentation/01-ComplexAPI.md` — `Complex`, its polar form, and `[Complex]` arithmetic.
 - `Documentation/02-MatrixAPI.md` — `Matrix` / `GenericMatrix`.
 - `Documentation/03-StateVectorAPI.md` — `StateVector`.
 - `Documentation/04-DiracAPI.md` — `Ket`, `Bra`, `†`, inner/outer products, `⊗`.

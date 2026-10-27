@@ -8,15 +8,15 @@
  `Matrix` are the types everything else is built from.
 
  - §1 `Complex` arithmetic: `*`, `/`, `conjugate`, `magnitudeSquared`, and the Born rule.
- - §2 Magnitude and phase: a pure phase `e^{iθ}` built by hand.
- - §3 Plain `[Complex]` vectors: addition, scaling, inner product, norm, normalization.
+ - §2 Magnitude and phase: `argument`, `Complex(argument:)`, `Complex.exp`, `Complex.pow`.
+ - §3 Plain `[Complex]` vectors: `adding`, `scaled(by:)`, `inner`, `norm`, `normalized()`.
  - §4 Matrices as transformations, and why the order of a product matters.
  - §5 Unitary matrices, and why `==` is the wrong test.
  - §6 The tensor product `⊗`, and what it has to do with `QuantumCircuit`.
 
- Limits: `Complex` has no polar form (`argument`, `exp`, `pow`), and there is no arithmetic on
- plain `[Complex]` vectors, so §3 uses small local helpers. `Matrix` equality is exact on
- `Double`s. Dense matrices only scale to a few qubits.
+ Needs SwiftQiskit 0.9.0 or later for the polar form and the `[Complex]` methods.
+
+ Limits: `Matrix` equality is exact on `Double`s. Dense matrices only scale to a few qubits.
 
  `01Matrices` covers the real-valued `GenericMatrix`; `11TensorProducts` treats `⊗` in depth.
  */
@@ -52,12 +52,22 @@ print("|amp|² = \(amp.magnitudeSquared)")
 // §2 — Magnitude and phase
 // ------------------------------------------------------------
 
-// Complex has no polar API; write e^{iθ} with Euler's formula.
+// Complex(argument:) builds the unit phase e^{iθ} directly from an angle.
 let theta = Double.pi / 3
 print("rad2deg(theta) = \(rad2deg(theta))")
-let phase = Complex(cos(theta), sin(theta))
+let phase = Complex(argument: theta)
 print(phase, phase.magnitude)
 print(PhaseGate.matrix(theta: theta)[1, 1])
+print("argument = \(phase.argument)")   // θ again, up to rounding
+
+// Magnitude and argument together: 3 + 4i has magnitude 5.
+let polar = Complex(3, 4)
+print(polar.magnitude, polar.argument)
+print(Complex(magnitude: polar.magnitude, argument: polar.argument))
+
+// e^{iπ} = -1; the imaginary part is rounding, about 1.2e-16.
+print(Complex.exp(Complex(0, Double.pi)))
+print(Complex.pow(.i, 4), Complex.pow(Complex(1, 1), 2))   // 1.0, 2.0i
 
 // ------------------------------------------------------------
 // §3 — Vectors of amplitudes
@@ -68,36 +78,19 @@ let one: [Complex] = [.zero, .one]
 let plus: [Complex] = [Complex(1 / sqrt(2), 0), Complex(1 / sqrt(2), 0)]
 print(zero, one, plus)
 
-func addVec(_ a: [Complex], _ b: [Complex]) -> [Complex] {
-    zip(a, b).map { $0 + $1 }
-}
-
-func scale(_ c: Complex, _ v: [Complex]) -> [Complex] {
-    v.map { c * $0 }
-}
-
-print(addVec([Complex(1, 0), Complex(0, 1)], [Complex(2, 0), Complex(0, -1)]))
-print(scale(Complex.i, [Complex(1, 0), Complex(2, 0)]))
+print(zero.adding(one).normalized())   // |0⟩ + |1⟩, normalized: equal superposition
+print([Complex(1, 0), Complex(0, 1)].adding([Complex(2, 0), Complex(0, -1)]))
+print([Complex(1, 0), Complex(2, 0)].scaled(by: Complex.i))
 
 // The inner product conjugates the first vector: ⟨a|b⟩ = Σ conj(aᵢ) bᵢ.
-func innerProduct(_ a: [Complex], _ b: [Complex]) -> Complex {
-    var sum = Complex.zero
-    for i in a.indices { sum = sum + a[i].conjugate * b[i] }
-    return sum
-}
-
 let v: [Complex] = [Complex(1, 0), Complex.i]
 let w: [Complex] = [Complex(1, 0), Complex(0, -1)]
-print("⟨v|w⟩ = \(innerProduct(v, w))")   // 0, so v and w are orthogonal
-
-func norm(_ v: [Complex]) -> Double {
-    sqrt(v.reduce(0.0) { $0 + $1.magnitudeSquared })
-}
+print("⟨v|w⟩ = \(v.inner(w))")   // 0, so v and w are orthogonal
 
 let raw: [Complex] = [Complex(1, 0), Complex.i]
-print("norm(raw) = \(norm(raw))")
-let normalized = raw.map { $0 * (1.0 / norm(raw)) }
-print(normalized, norm(normalized))
+print("norm(raw) = \(raw.norm)")
+let normalized = raw.normalized()
+print(normalized, normalized.norm)
 
 // ------------------------------------------------------------
 // §4 — Matrices as transformations

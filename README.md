@@ -2,7 +2,7 @@
 
 Xcode playground pages for [SwiftQiskit](https://github.com/SwiftProjectOrganization/SwiftQiskit),
 a Swift quantum-circuit simulator. The library is used as a remote Swift package
-(currently resolved to 0.8.1).
+(currently resolved to 0.9.0).
 
 **Playground pages 03–<50 are based on the introductory documents in
 [SwiftQiskitApp](https://github.com/SwiftProjectOrganization/SwiftQiskitApp)**
@@ -80,7 +80,7 @@ library versions of the tools pages 21–24 build by hand:
 
 | Document | Covers |
 |----------|--------|
-| [01-ComplexAPI.md](Documentation/01-ComplexAPI.md) | `Complex`: properties, constants, arithmetic |
+| [01-ComplexAPI.md](Documentation/01-ComplexAPI.md) | `Complex`: properties, constants, arithmetic, polar form, `[Complex]` vectors |
 | [02-MatrixAPI.md](Documentation/02-MatrixAPI.md) | `Matrix` / `GenericMatrix`: initializers, arithmetic, adjoint, trace |
 | [03-StateVectorAPI.md](Documentation/03-StateVectorAPI.md) | `StateVector`: amplitudes, probabilities, gates, measurement |
 | [04-DiracAPI.md](Documentation/04-DiracAPI.md) | `Ket`, `Bra`, the `†` operator, inner/outer products, expectation values, `⊗` |
