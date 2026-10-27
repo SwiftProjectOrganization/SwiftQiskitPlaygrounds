@@ -123,7 +123,7 @@ func inverseQFTMatrix(size: Int) -> Matrix {
     for y in 0..<size {
         for c in 0..<size {
             let theta = -2.0 * Double.pi * Double(y * c) / Double(size)
-            m[y, c] = Complex(cos(theta), sin(theta)) * scale
+            m[y, c] = Complex(magnitude: scale, argument: theta)
         }
     }
     return m

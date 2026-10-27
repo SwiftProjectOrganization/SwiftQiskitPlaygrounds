@@ -103,7 +103,7 @@ print(maxDiff(HadamardGate.matrix† * HadamardGate.matrix, Matrix.identity(size
 func makeState(theta: Double, phi: Double) -> StateVector {
     StateVector([
         Complex(cos(theta / 2)),
-        Complex(sin(theta / 2) * cos(phi), sin(theta / 2) * sin(phi))
+        Complex(magnitude: sin(theta / 2), argument: phi)
     ])
 }
 let theta = Double.pi / 3

@@ -62,7 +62,7 @@ for s in canonical {
 // Bloch point does not move.
 
 let gamma = 0.7
-let phase = Complex(cos(gamma), sin(gamma))
+let phase = Complex(argument: gamma)
 let plusState = plus.run()
 let plusPhased = StateVector(plusState.amplitudes.map { phase * $0 })
 let b1 = BlochVector(plusState), b2 = BlochVector(plusPhased)
@@ -87,7 +87,7 @@ let tiltPhi = atan2(0.5, sqrt(2) / 2)
 
 let tilted = StateVector([
     Complex(cos(tiltTheta / 2)),
-    Complex(sin(tiltTheta / 2) * cos(tiltPhi), sin(tiltTheta / 2) * sin(tiltPhi))
+    Complex(magnitude: sin(tiltTheta / 2), argument: tiltPhi)
 ])
 let tiltBloch = BlochVector(tilted)
 print(tiltBloch.x, tiltBloch.y, tiltBloch.z)
@@ -142,7 +142,7 @@ print(String(format: "z–y plane (from +x): r %.3f, dropped x %.3f", rZY, tiltB
 func makeState(theta: Double, phi: Double) -> StateVector {
     StateVector([
         Complex(cos(theta / 2)),
-        Complex(sin(theta / 2) * cos(phi), sin(theta / 2) * sin(phi))
+        Complex(magnitude: sin(theta / 2), argument: phi)
     ])
 }
 

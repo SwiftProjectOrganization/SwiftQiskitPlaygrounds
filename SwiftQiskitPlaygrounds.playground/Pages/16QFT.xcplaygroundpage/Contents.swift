@@ -102,7 +102,7 @@ for c in 0..<N {
     let amps = qc.run().amplitudes
     for y in 0..<N {
         let theta = 2 * Double.pi * Double(y * c) / Double(N)
-        let want = Complex(cos(theta), sin(theta)) * (1.0 / sqrt(Double(N)))
+        let want = Complex(magnitude: 1.0 / sqrt(Double(N)), argument: theta)
         maxDeviation = max(maxDeviation, (amps[y] - want).magnitude)
     }
 }
