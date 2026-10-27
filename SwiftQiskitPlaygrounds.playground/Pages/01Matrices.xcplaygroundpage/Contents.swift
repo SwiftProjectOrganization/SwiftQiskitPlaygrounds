@@ -30,9 +30,6 @@ import SwiftQiskitViews
 // would generate ambiguities on Float and Int (e.g. on
 // amplitude).
 
-// As you can't easily mix types, later playgounds
-// in this project always use Complex(2), etc.
-
 let m0 = GenericMatrix([[Double(1), Double(2)], [Double(3), Double(4)]])
 print(m0)
 
