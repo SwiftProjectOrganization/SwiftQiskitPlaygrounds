@@ -52,10 +52,12 @@ print("|amp|² = \(amp.magnitudeSquared)")
 // §2 — Magnitude and phase
 // ------------------------------------------------------------
 
-// Complex(argument:) builds the unit phase e^{iθ} directly from an angle.
+// Complex(argument:) builds the unit phase e^{iθ} directly from an angle. See also $6 in 06BlochSpheres.
 let theta = Double.pi / 3
 print("rad2deg(theta) = \(rad2deg(theta))")
 let phase = Complex(argument: theta)
+// Use Euler's formula
+let phase2 = Complex(cos(theta), sin(theta))
 print(phase, phase.magnitude)
 print(PhaseGate.matrix(theta: theta)[1, 1])
 print("argument = \(phase.argument)")   // θ again, up to rounding

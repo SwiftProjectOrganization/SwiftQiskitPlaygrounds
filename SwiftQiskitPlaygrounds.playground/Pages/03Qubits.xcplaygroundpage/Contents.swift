@@ -30,10 +30,10 @@ import SwiftQiskitViews
 
 // Single qubit examples. See 06BlochSpheres for more qubit examples.
 let q0: Ket = .zero
-print("print(q0):\n\(q0)\n")
+print("q0 = \(q0)\n")
 
 let q1: Ket = .plusI
-print("print(q1):\n\(q1)\n")
+print("q1 = \(q1)\n")
 
 // ------------------------------------------------------------
 // §2 — Multi-qubit creation
