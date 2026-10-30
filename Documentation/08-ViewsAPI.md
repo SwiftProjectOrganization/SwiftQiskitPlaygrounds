@@ -50,4 +50,4 @@ PlaygroundPage.current.setLiveView(
 - `View.writePDF(to: URL, background: Color? = .white) throws` writes a single-page vector PDF.
 - Both render in light appearance and run on the main actor. Failures throw `ViewExportError` (`renderFailed`, `cannotCreateFile`, `encodeFailed`).
 - Requires SwiftQiskit 0.9.1 or later.
-- Limit: in an Xcode 27.2 playground these calls fail with "Failed to load linked library cups of module SwiftUI". Use them from a command-line tool instead; `Tools/ExportBlochSphere` is an example (it writes to `~/Documents/QiskitFigures` by default) and page `51BlochSphere` describes it.
+- Limit: in an Xcode 27.2 playground these calls fail with "Failed to load linked library cups of module SwiftUI". Use them from a command-line tool instead: `Tools/QiskitFigures` defines the figures and its `ExportFigures` executable writes them (`--list`, `--out <folder>`, `--format png|pdf|both`, names or groups; default folder `~/Documents/QiskitFigures`). Page `51BlochSphere` describes it.

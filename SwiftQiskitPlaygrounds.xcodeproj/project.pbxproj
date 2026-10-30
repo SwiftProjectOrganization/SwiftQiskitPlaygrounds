@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		5FE34234A87C3D47EE0388EF /* SwiftQiskit in Frameworks */ = {isa = PBXBuildFile; productRef = 2B2AF6843FC9B812243AAB66 /* SwiftQiskit */; };
 		76E326FE5AFC8389E174EB56 /* SwiftQiskitViews in Frameworks */ = {isa = PBXBuildFile; productRef = 1E5023F6ED1E9367236CA877 /* SwiftQiskitViews */; };
+		D4A4CDF93095517C00445921 /* QiskitFigures in Frameworks */ = {isa = PBXBuildFile; productRef = D4A4CDF83095517C00445921 /* QiskitFigures */; };
 		E367B6EF88D6F99A5CC05937 /* PlaygroundDeps.swift in Sources */ = {isa = PBXBuildFile; fileRef = B75DC26B08D053F51E75AA54 /* PlaygroundDeps.swift */; };
 /* End PBXBuildFile section */
 
@@ -33,6 +34,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D4A4CDF93095517C00445921 /* QiskitFigures in Frameworks */,
 				5FE34234A87C3D47EE0388EF /* SwiftQiskit in Frameworks */,
 				76E326FE5AFC8389E174EB56 /* SwiftQiskitViews in Frameworks */,
 			);
@@ -87,6 +89,7 @@
 			packageProductDependencies = (
 				2B2AF6843FC9B812243AAB66 /* SwiftQiskit */,
 				1E5023F6ED1E9367236CA877 /* SwiftQiskitViews */,
+				D4A4CDF83095517C00445921 /* QiskitFigures */,
 			);
 			productName = PlaygroundDeps;
 			productReference = AC220A84433DB63AA969F46D /* PlaygroundDeps.framework */;
@@ -112,6 +115,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				D76AC61A48373B3A0AC93DC3 /* XCRemoteSwiftPackageReference "SwiftQiskit" */,
+				D4A4CDF73095517C00445921 /* XCLocalSwiftPackageReference "Tools/QiskitFigures" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 9A2D1A0F0B3FFF404DD92371 /* Products */;
@@ -337,6 +341,13 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCLocalSwiftPackageReference section */
+		D4A4CDF73095517C00445921 /* XCLocalSwiftPackageReference "Tools/QiskitFigures" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Tools/QiskitFigures;
+		};
+/* End XCLocalSwiftPackageReference section */
+
 /* Begin XCRemoteSwiftPackageReference section */
 		D76AC61A48373B3A0AC93DC3 /* XCRemoteSwiftPackageReference "SwiftQiskit" */ = {
 			isa = XCRemoteSwiftPackageReference;
@@ -358,6 +369,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = D76AC61A48373B3A0AC93DC3 /* XCRemoteSwiftPackageReference "SwiftQiskit" */;
 			productName = SwiftQiskit;
+		};
+		D4A4CDF83095517C00445921 /* QiskitFigures */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = QiskitFigures;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

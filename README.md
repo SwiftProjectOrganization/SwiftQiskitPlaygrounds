@@ -73,7 +73,7 @@ Extra pages:
 | Page | Topic |
 |------|-------|
 | `50StateVectorCPU` | Applying gates directly to a state vector, without building 2ⁿ × 2ⁿ matrices |
-| `51BlochSphere` | Drawing |+⟩ with `BlochSphereView`; `Tools/ExportBlochSphere` exports it with `writePNG` / `writePDF` |
+| `51BlochSphere` | Showing a shared figure (|+⟩ on the Bloch sphere); `Tools/QiskitFigures` exports figures as PNG and PDF |
 
 ## API documentation
 The `Documentation/` folder describes the SwiftQiskit API used by the pages, plus (in 09) the
@@ -90,6 +90,7 @@ library versions of the tools pages 21–24 build by hand:
 | [07-TensorNetworkAPI.md](Documentation/07-TensorNetworkAPI.md) | `TensorNetwork`: nodes, edges, and `contract()` as a check on `run()` |
 | [08-ViewsAPI.md](Documentation/08-ViewsAPI.md) | `CHSHChartView` and `TensorNetworkView` live views |
 | [09-NoiseTomographyVariationalAPI.md](Documentation/09-NoiseTomographyVariationalAPI.md) | `DensityMatrix`, Kraus channels and noise, `StateTomography`, `PauliString`/`Hamiltonian`, parameter shift and gradient descent |
+| [10-FiguresPlan.md](Documentation/10-FiguresPlan.md) | The `Tools/QiskitFigures` package: figure list, adding figures, running `ExportFigures` |
 
 For the full library, see the [SwiftQiskit repository](https://github.com/SwiftProjectOrganization/SwiftQiskit).
 
@@ -100,4 +101,4 @@ For the full library, see the [SwiftQiskit repository](https://github.com/SwiftP
 | `SwiftQiskitPlaygrounds.playground` | The playground pages |
 | `PlaygroundDeps/` | Framework target that links `SwiftQiskit` and `SwiftQiskitViews` |
 | `Documentation/` | API reference documents |
-| `Tools/` | Command-line helpers; `ExportBlochSphere` writes the Bloch sphere PNG and PDF (page 51) |
+| `Tools/` | Command-line helpers; `QiskitFigures` defines the Bloch sphere, chart and tensor diagram figures and exports them as PNG and PDF |

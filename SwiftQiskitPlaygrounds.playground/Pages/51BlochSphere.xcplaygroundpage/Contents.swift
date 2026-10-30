@@ -8,10 +8,12 @@
  - SwiftQiskit 0.9.1 adds `writePNG(to:)` (scale 2 by default, white background, light
    appearance) and `writePDF(to:)` (single-page vector PDF) for `SwiftQiskitViews` views.
  - Limit: calling them inside a playground fails with "Failed to load linked library cups of
-   module SwiftUI" (Xcode 27.2), so this page only shows the view and lists the calls.
-   `Tools/ExportBlochSphere` makes the same view and writes the two files. From the
-   repository root, run `swift run --package-path Tools/ExportBlochSphere ExportBlochSphere [folder]`.
-   The files go to `~/Documents/QiskitFigures` unless a folder is given; it is created if needed.
+   module SwiftUI" (Xcode 27.2), so this page only shows the view.
+ - The `QiskitFigures` package (`Tools/QiskitFigures`) defines the figures once. This page
+   shows `bloch-plus` from it, and `ExportFigures` writes the same figure to disk. From the
+   repository root, run `swift run --package-path Tools/QiskitFigures ExportFigures bloch-plus`,
+   or `--list` to see every figure. The files go to `~/Documents/QiskitFigures` unless
+   `--out <folder>` is given; the folder is created if needed.
  */
 
 import Foundation
@@ -19,16 +21,13 @@ import SwiftUI
 import PlaygroundSupport
 import SwiftQiskit
 import SwiftQiskitViews
+import QiskitFigures
 
 let bloch = BlochVector(Ket.plus)
 print("x \(bloch.x)  y \(bloch.y)  z \(bloch.z)  θ \(bloch.theta)  φ \(bloch.phi)")
 
-let view = BlochSphereView(label: "|+⟩", bloch: bloch)
+guard let figure = Figures.named("bloch-plus") else { fatalError("figure bloch-plus is missing") }
 
-// What Tools/ExportBlochSphere runs (disabled here, see the note above):
-// try view.writePNG(to: URL(fileURLWithPath: "plus.png"))   // scale: 2 by default
-// try view.writePDF(to: URL(fileURLWithPath: "plus.pdf"))   // single-page vector PDF
-
-PlaygroundPage.current.setLiveView(view.padding())
+PlaygroundPage.current.setLiveView(figure.view.padding())
 
 //: [Next](@next)

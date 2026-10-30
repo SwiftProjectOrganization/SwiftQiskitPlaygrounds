@@ -3,7 +3,7 @@
     {
       "identity" : "swiftqiskit",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/SwiftProjectOrganization/SwiftQiskit",
+      "location" : "https://github.com/SwiftProjectOrganization/SwiftQiskit.git",
       "state" : {
         "revision" : "547a4ce88b9c9077217b13430d6caf2dc791052e",
         "version" : "0.9.1"
