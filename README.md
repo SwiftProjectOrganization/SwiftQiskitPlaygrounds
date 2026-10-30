@@ -73,6 +73,7 @@ Extra pages:
 | Page | Topic |
 |------|-------|
 | `50StateVectorCPU` | Applying gates directly to a state vector, without building 2ⁿ × 2ⁿ matrices |
+| `51BlochSphere` | Drawing |+⟩ with `BlochSphereView`; `Tools/ExportBlochSphere` exports it with `writePNG` / `writePDF` |
 
 ## API documentation
 The `Documentation/` folder describes the SwiftQiskit API used by the pages, plus (in 09) the
@@ -99,3 +100,4 @@ For the full library, see the [SwiftQiskit repository](https://github.com/SwiftP
 | `SwiftQiskitPlaygrounds.playground` | The playground pages |
 | `PlaygroundDeps/` | Framework target that links `SwiftQiskit` and `SwiftQiskitViews` |
 | `Documentation/` | API reference documents |
+| `Tools/` | Command-line helpers; `ExportBlochSphere` writes the Bloch sphere PNG and PDF (page 51) |

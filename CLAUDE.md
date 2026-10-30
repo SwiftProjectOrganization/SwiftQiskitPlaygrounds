@@ -15,7 +15,7 @@ API reference documents.
 
 ## Relationship to the SwiftQiskit package
 
-This project depends on **`SwiftQiskit` as a remote package** (currently resolved to `0.9.0`).
+This project depends on **`SwiftQiskit` as a remote package** (currently resolved to `0.9.1`).
 The package ships two products, `SwiftQiskit` and `SwiftQiskitViews` (SwiftUI views such as
 `BlochVector`, `CHSHChartView`, `TensorNetworkView`). The `PlaygroundDeps` framework target
 links both, and the pages import them:
@@ -53,6 +53,7 @@ Prefer the `xcode-tools` MCP tools (`BuildProject`, `XcodeRefreshCodeIssuesInFil
 | `SwiftQiskitPlaygrounds.playground/Pages/` | The pages, `NNName.xcplaygroundpage/Contents.swift` |
 | `PlaygroundDeps/` | Framework target that links `SwiftQiskit` and `SwiftQiskitViews` |
 | `Documentation/` | API reference documents `01`–`09` |
+| `Tools/` | Command-line helpers; `ExportBlochSphere` writes the Bloch sphere PNG and PDF (page 51) |
 | `README.md` | Overview, page table, API document table |
 
 ## Page conventions

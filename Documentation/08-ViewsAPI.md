@@ -1,6 +1,6 @@
 # Views API (charts and tensor diagrams)
 
-The `SwiftQiskitViews` library (`SwiftQiskit/Sources/SwiftQiskitViews/`) provides SwiftUI views for the pages' live views. This document covers the two used by pages 20, 23, 24 and 26: `CHSHChartView` and `TensorNetworkView`. Both are stateless `public struct`s that conform to `View`, so a page can create one directly and pass it to `PlaygroundPage.current.setLiveView(_:)`. The Bloch sphere views used by pages 03 and 06 are not covered here.
+The `SwiftQiskitViews` library (`SwiftQiskit/Sources/SwiftQiskitViews/`) provides SwiftUI views for the pages' live views. This document covers the two used by pages 20, 23, 24 and 26: `CHSHChartView` and `TensorNetworkView`. Both are stateless `public struct`s that conform to `View`, so a page can create one directly and pass it to `PlaygroundPage.current.setLiveView(_:)`. `BlochSphereView` and the export methods are described at the end; the other Bloch views used by pages 03 and 06 are not covered here.
 
 ## CHSHChartView
 `CHSHChartView.swift`: despite its name, a general 2D line and scatter chart. Page `20CHSH` uses it for correlation curves, `23VQE` for the energy landscape and descent steps, and `24Trotter` for ⟨Z₀⟩(t).
@@ -43,3 +43,11 @@ PlaygroundPage.current.setLiveView(
 ## Gotchas
 - Import both modules on the page: `import SwiftQiskit` for the data and `import SwiftQiskitViews` for the views. Both are linked by building the `PlaygroundDeps` scheme (see the README).
 - `CHSHChartView` maps points linearly into `xRange`/`yRange` and doesn't clip them, so choose ranges that contain the data.
+
+## BlochSphereView and exporting views
+- `BlochSphereView(label: String, bloch: BlochVector, size: CGFloat = 220)` draws a 2D projection of the Bloch sphere with the state arrow. `BlochVector(_ state: StateVector)` computes the coordinates, for example `BlochVector(Ket.plus)`.
+- `View.writePNG(to: URL, scale: CGFloat = 2, background: Color? = .white) throws` rasterizes any `SwiftQiskitViews` view to a PNG.
+- `View.writePDF(to: URL, background: Color? = .white) throws` writes a single-page vector PDF.
+- Both render in light appearance and run on the main actor. Failures throw `ViewExportError` (`renderFailed`, `cannotCreateFile`, `encodeFailed`).
+- Requires SwiftQiskit 0.9.1 or later.
+- Limit: in an Xcode 27.2 playground these calls fail with "Failed to load linked library cups of module SwiftUI". Use them from a command-line tool instead; `Tools/ExportBlochSphere` is an example (it writes to `~/Documents/QiskitFigures` by default) and page `51BlochSphere` describes it.
