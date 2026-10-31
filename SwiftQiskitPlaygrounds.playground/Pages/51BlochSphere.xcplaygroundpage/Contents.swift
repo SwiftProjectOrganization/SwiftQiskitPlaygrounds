@@ -26,8 +26,10 @@ import QiskitFigures
 let bloch = BlochVector(Ket.plus)
 print("x \(bloch.x)  y \(bloch.y)  z \(bloch.z)  θ \(bloch.theta)  φ \(bloch.phi)")
 
-guard let figure = Figures.named("bloch-plus") else { fatalError("figure bloch-plus is missing") }
-
-PlaygroundPage.current.setLiveView(figure.view.padding())
+// Playground top-level code runs on the main thread, but is not marked main-actor isolated.
+MainActor.assumeIsolated {
+    guard let figure = Figures.named("bloch-plus") else { fatalError("figure bloch-plus is missing") }
+    PlaygroundPage.current.setLiveView(figure.view.padding())
+}
 
 //: [Next](@next)
