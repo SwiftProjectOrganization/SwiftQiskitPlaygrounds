@@ -13,10 +13,25 @@ extension Figures {
             ("bloch-plus-i", "|+i⟩", Ket.plusI),
             ("bloch-minus-i", "|−i⟩", Ket.minusI)
         ]
-        return states.map { state in
+        let basis = states.map { state in
             Figure(name: state.name, group: "bloch") {
                 AnyView(BlochSphereView(label: state.label, bloch: BlochVector(state.ket)))
             }
+        }
+        return basis + [general]
+    }
+
+    /// A general state at polar angle θ = 60° and azimuth φ = 45°.
+    @MainActor private static var general: Figure {
+        let theta = deg2rad(60.0)
+        let phi = deg2rad(45.0)
+        let vector = BlochVector(
+            x: sin(theta) * cos(phi),
+            y: sin(theta) * sin(phi),
+            z: cos(theta)
+        )
+        return Figure(name: "bloch-theta60-phi45", group: "bloch") {
+            AnyView(BlochSphereView(label: "θ = 60°, φ = 45°", bloch: vector))
         }
     }
 }

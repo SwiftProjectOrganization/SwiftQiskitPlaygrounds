@@ -9,7 +9,7 @@ let package = Package(
         .executable(name: "ExportFigures", targets: ["ExportFigures"])
     ],
     dependencies: [
-        .package(url: "https://github.com/SwiftProjectOrganization/SwiftQiskit.git", from: "0.9.1")
+        .package(url: "https://github.com/SwiftProjectOrganization/SwiftQiskit.git", from: "0.9.2")
     ],
     targets: [
         .target(
