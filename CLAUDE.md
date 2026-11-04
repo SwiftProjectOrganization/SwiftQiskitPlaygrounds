@@ -52,7 +52,7 @@ Prefer the `xcode-tools` MCP tools (`BuildProject`, `XcodeRefreshCodeIssuesInFil
 | `SwiftQiskitPlaygrounds.xcodeproj` | Xcode project with the SwiftQiskit package dependency |
 | `SwiftQiskitPlaygrounds.playground/Pages/` | The pages, `NNName.xcplaygroundpage/Contents.swift` |
 | `PlaygroundDeps/` | Framework target that links `SwiftQiskit` and `SwiftQiskitViews` |
-| `Documentation/` | API reference documents `01`–`09` and the figures plan `10` |
+| `Documentation/` | API reference documents `01`–`09` |
 | `Tools/` | Command-line helpers; `QiskitFigures` defines the Bloch sphere, chart and tensor diagram figures and exports them as PNG and PDF |
 | `README.md` | Overview, page table, API document table |
 
@@ -73,7 +73,7 @@ Prefer the `xcode-tools` MCP tools (`BuildProject`, `XcodeRefreshCodeIssuesInFil
 
 ## Figures
 
-`Tools/QiskitFigures` is a local Swift package. Its `QiskitFigures` library lists the figures
+`Tools/QiskitFigures` is a local Swift package (see its `README.md`). Its `QiskitFigures` library lists the figures
 (`Figures.all`, `Figures.named(_:)`), and the playground pages can show them. Its `ExportFigures`
 executable writes them as PNG and PDF, because `writePNG`/`writePDF` fail inside a playground
 (Xcode 27.2, libcups load error). To add a figure, add an entry in `BlochFigures.swift`,
@@ -126,7 +126,7 @@ messages, and PR descriptions.
 - `Documentation/08-ViewsAPI.md` — `CHSHChartView`, `TensorNetworkView`.
 - `Documentation/09-NoiseTomographyVariationalAPI.md` — `DensityMatrix`, Kraus channels,
   `StateTomography`, `Hamiltonian`, parameter shift.
-- `Documentation/10-FiguresPlan.md` — the `Tools/QiskitFigures` package and `ExportFigures`.
+- `Tools/QiskitFigures/README.md` — the `QiskitFigures` package and `ExportFigures`.
 - `../SwiftQiskit/CLAUDE.md`, `../SwiftQiskit/README.md`, `../SwiftQiskit/API.md` — the
   simulator itself.
 - `../SwiftQiskitApp/INTRODUCTION.md` and `Docs/Introduction/` — the chapters these pages

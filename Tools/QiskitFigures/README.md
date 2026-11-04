@@ -1,20 +1,8 @@
-# Figures plan (PNG and PDF export)
+# QiskitFigures
 
-This document records why and how `Tools/QiskitFigures` exists, so that more figures can be added later.
+`QiskitFigures` defines the figures (Bloch spheres, charts, tensor diagrams) once, in a library that both the playground pages and the export program import. The `ExportFigures` executable writes them as PNG and PDF, using the `writePNG(to:scale:background:)` and `writePDF(to:background:)` methods that SwiftQiskit 0.9.1 adds to `SwiftQiskitViews` views (`ViewExport.swift`).
 
-## Goal
-
-Produce many PNG and PDF figures (Bloch spheres, charts, tensor diagrams) from this repository, using the `writePNG(to:scale:background:)` and `writePDF(to:background:)` methods that SwiftQiskit 0.9.1 adds to `SwiftQiskitViews` views (`ViewExport.swift`).
-
-## Constraint
-
-In an Xcode 27.2 playground, calling `writePNG` or `writePDF` fails with "Failed to load linked library cups of module SwiftUI". Moving the call into the `PlaygroundDeps` framework did not help. A page can show a view in the live view, but the files have to be written by a command-line program.
-
-## Design
-
-Each figure is defined once, in a library that both the playground pages and the export program import.
-
-`Tools/QiskitFigures` is a Swift package with two products:
+## Products
 
 | Product | Kind | Purpose |
 |---|---|---|
@@ -23,7 +11,22 @@ Each figure is defined once, in a library that both the playground pages and the
 
 The package depends on SwiftQiskit 0.9.1 or later, using the same URL as the Xcode project (`https://github.com/SwiftProjectOrganization/SwiftQiskit.git`) so that one copy resolves.
 
-The Xcode project adds `Tools/QiskitFigures` as a local package, and the `PlaygroundDeps` target links the `QiskitFigures` product. A page can then `import QiskitFigures` and show a figure with `Figures.named("bloch-plus")?.view`.
+## Running the exporter
+
+From the repository root:
+
+```
+swift run --package-path Tools/QiskitFigures ExportFigures [--list] [--out <folder>] [--format png|pdf|both] [name-or-group ...]
+```
+
+From inside `Tools/QiskitFigures`, the same command is `swift run ExportFigures [options]`.
+
+- No names exports every figure. A name selects one figure and a group name (`bloch`, `chart`, `tensor`) selects all figures in it.
+- The default folder is `~/Documents/QiskitFigures`. It is created if it does not exist, and so is a folder given with `--out`.
+- `--format` defaults to `both`. PNG files use scale 2 and a white background.
+- An unknown name prints an error and exits with status 1.
+
+The exporter can also be run from Xcode through the `ExportFigures` scheme, with the arguments set in the scheme editor.
 
 ## Figures
 
@@ -37,20 +40,13 @@ The chart leaves out the sampled series so the exported file is the same on ever
 
 To add a figure, add an entry in the matching file. A new kind of figure gets a new file and a new `Figures` property, which `Figures.all` includes.
 
-## Running the exporter
+## Using a figure in a page
 
-From the repository root:
+The Xcode project adds `Tools/QiskitFigures` as a local package, and the `PlaygroundDeps` target links the `QiskitFigures` product. A page can then `import QiskitFigures` and show a figure with `Figures.named("bloch-plus")?.view`.
 
-```
-swift run --package-path Tools/QiskitFigures ExportFigures [--list] [--out <folder>] [--format png|pdf|both] [name-or-group ...]
-```
+## Why the export runs from the command line
 
-- No names exports every figure. A name selects one figure and a group name (`bloch`, `chart`, `tensor`) selects all figures in it.
-- The default folder is `~/Documents/QiskitFigures`. It is created if it does not exist, and so is a folder given with `--out`.
-- `--format` defaults to `both`. PNG files use scale 2 and a white background.
-- An unknown name prints an error and exits with status 1.
-
-The exporter can also be run from Xcode through the `ExportFigures` scheme, with the arguments set in the scheme editor.
+In an Xcode 27.2 playground, calling `writePNG` or `writePDF` fails with "Failed to load linked library cups of module SwiftUI". Moving the call into the `PlaygroundDeps` framework did not help. A page can show a view in the live view, but the files have to be written by a command-line program.
 
 ## Limits
 
