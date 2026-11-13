@@ -74,6 +74,7 @@ Extra pages:
 |------|-------|
 | `50StateVectorCPU` | Applying gates directly to a state vector, without building 2ⁿ × 2ⁿ matrices |
 | `51BlochSphere` | Showing a shared figure (|+⟩ on the Bloch sphere); `Tools/QiskitFigures` exports figures as PNG and PDF |
+| `52GeometryOfStates` | Phase, rays, Fubini–Study distance, Hamiltonian motion, geometric phase and reduced states of a qubit, after Sam Vaseghi's "The Geometry of Quantum States" |
 
 ## API documentation
 The `Documentation/` folder describes the SwiftQiskit API used by the pages, plus (in 09) the
